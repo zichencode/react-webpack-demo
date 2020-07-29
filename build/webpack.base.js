@@ -2,10 +2,11 @@
  * webpack基础配置
  */
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+console.log(path.resolve(__dirname, '../src'), 'ccc')
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/app.js',
   module: {
     rules: [
       // less文件
@@ -28,15 +29,22 @@ module.exports = {
           }
         ],
         exclude: /node_modules/, // 排除选项
-        include: path.resolve(__dirname, 'src'), // 匹配特定条件
+        include: path.resolve(__dirname, '../src'), // 匹配特定条件
       },
       // 转换js
       {
         test: /\.jsx?$/,
-        use: {
-          loader: 'babel-loader' // 转译ES6+语法
-        },
-        exclude: /node_modules/
+        use: [
+          {
+            loader: 'babel-loader', // 转译ES6+语法
+            options: {
+              cacheDirectory: true
+            }
+          },
+          'eslint-loader'
+        ],
+        exclude: /node_modules/,
+        include: path.resolve(__dirname, '../src'), // 匹配特定条件
       }
     ]
   },
@@ -44,5 +52,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     })
-  ]
+  ],
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
+  }
 }
