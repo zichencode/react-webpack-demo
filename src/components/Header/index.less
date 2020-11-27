@@ -1,0 +1,28 @@
+@paddingWidth: 100px;
+header {
+  height: 66px;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: calc(100% - 2*@paddingWidth);
+  padding: 0 @paddingWidth;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  .logo {
+    padding: 12px;
+  }
+  nav {
+    display: flex;
+    .active {
+      color: #f90;
+    }
+    a {
+      padding: 0 20px;
+    }
+  }
+  .user {
+    color: #ff6600;
+  }
+}

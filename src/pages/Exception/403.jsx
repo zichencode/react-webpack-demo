@@ -2,6 +2,6 @@ import React from 'react';
 
 export default () => (
   <div>
-    not NotFound
+    not NotFound 403
   </div>
 );

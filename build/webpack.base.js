@@ -3,16 +3,37 @@
  */
 const path = require('path')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-console.log(path.resolve(__dirname, '../src'), 'ccc')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const fs = require('fs');
+
+const NODE_ENV = process.env.NODE_ENV === 'production' ? true : false;
+
 module.exports = {
-  entry: './src/app.js',
+  entry: path.join(__dirname, '../src/app.js'),
+  output: {
+    path: path.resolve(__dirname, '../dist'),
+    filename: '[name].bundle.js',
+    chunkFilename: 'chunk/[name].bundle.js',
+    publicPath: '/'
+  },
   module: {
     rules: [
       // less文件
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+        use: [NODE_ENV ? MiniCssExtractPlugin.loader : 'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            modules: {
+              localIdentName: "[name]__[local]--[hash:base64:3]",
+            },
+            // localIdentName: '[name]_[local]_[hash:base64:5]'
+          }
+        },
+          'postcss-loader', 'less-loader'],
         exclude: /node_modules/
       },
       // 图片
@@ -41,7 +62,7 @@ module.exports = {
               cacheDirectory: true
             }
           },
-          'eslint-loader'
+          // 'eslint-loader' // 注视eslint
         ],
         exclude: /node_modules/,
         include: path.resolve(__dirname, '../src'), // 匹配特定条件
@@ -51,12 +72,17 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash:5].css',
+      chunkFilename: 'chunk/[id].[contenthash:5].css',
+      linkType: 'text/css'
     })
   ],
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.jsx'],
     alias: {
-      '@': path.resolve(__dirname, '../src'),
+      '@': path.join(__dirname, '../src'),
     },
   }
 }

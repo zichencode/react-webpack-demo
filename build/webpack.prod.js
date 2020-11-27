@@ -12,7 +12,9 @@ const prodConfig = {
 
   plugins: [
     new CleanWebpackPlugin()
-  ]
+  ],
+  // devtool: 'eval-source-map',
+
 }
 
 module.exports = webpackMerge(baseWepack, prodConfig)

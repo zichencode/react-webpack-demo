@@ -10,11 +10,13 @@ const baseWepack = require('./webpack.base.js')
 const devConfig = {
   mode: 'development',
   devServer: {
-    contentBase: '../dist'
+    contentBase: '../dist',
+    historyApiFallback: true // 使用html5 historyAPI时候必须设置的值
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+  devtool: 'eval-source-map',
 }
 
 module.exports = webpackMerge(baseWepack, devConfig)
