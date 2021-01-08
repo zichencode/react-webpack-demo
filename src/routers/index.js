@@ -44,12 +44,12 @@ const renderRoute = (routes) => {
               path={route.path}
               exact={route.exact}
               strict={route.strict}
-              render={() => {
+              render={(props) => {
                 const renderChildRoutes = renderRoute(route.children);
                 if (route.component) {
                   return (
                     <Suspense fallback={<Loading />}>
-                      <route.component route={route}>{renderChildRoutes}</route.component>
+                      <route.component {...props} route={route}>{renderChildRoutes}</route.component>
                     </Suspense>
                   );
                 }

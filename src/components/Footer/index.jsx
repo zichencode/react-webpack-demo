@@ -6,7 +6,6 @@ import React from 'react';
 import styles from './index.less';
 
 const Footer = (props) => {
-  console.log(props);
   return (
     <>
       <div className={styles.footer}>

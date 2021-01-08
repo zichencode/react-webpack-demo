@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 import styles from './index.less';
 
-export default () => {
+export default (props) => {
   // const history = useHistory();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    console.log(store, 'ccc');
+    console.log(props);
   });
   const click = () => {
     setCount(count + 1);
